@@ -4,13 +4,15 @@ on: [push]
 jobs:
   read-all-feature-files:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v3
-      - id: set-json
+      - id: set-matrix
         name: set JSON
         run: echo "matrix={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)}}" >> "$GITHUB_OUTPUT"
       - name: Test
-        run: echo ${{ steps.set-json.outputs.matrix }}
+        run: echo ${{ steps.set-matrix.outputs.matrix }}
       
   execute-test-specification:
     needs: read-all-feature-files
