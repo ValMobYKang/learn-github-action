@@ -20,4 +20,4 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.read-all-feature-files.outputs.matrix) }}
     steps:
-      - run: echo $${{ matrix.matrix }}
+      - run: echo $${{ matrix.files }}
