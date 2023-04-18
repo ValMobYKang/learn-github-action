@@ -15,7 +15,7 @@ jobs:
         run: echo ${{ steps.set-matrix.outputs.matrix }}
       
   execute-test-specification:
-    needs: read-all-feature-files
+    needs: loadFeatures
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.loadFeatures.outputs.matrix) }}
