@@ -7,6 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: set JSON
-        run: echo "ABC=123" >> $GITHUB_ENV
+        run: echo "ABC={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo " \"$i\","; done;)}};" >> $GITHUB_ENV
       - name: Test
         run: echo $ABC
