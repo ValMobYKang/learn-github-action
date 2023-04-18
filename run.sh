@@ -1,4 +1,1 @@
-#!/bin/bash
-
-result="{ \"files\" : { $(for i in $(find ./features -type f -name "*.feature"); do echo " \"$i\","; done;) } }";
-echo $result
+echo "matrix={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)}}" >> "$GITHUB_OUTPUT"
