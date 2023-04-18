@@ -7,6 +7,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: set JSON
-        run: echo "ABC={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)}}" >> $GITHUB_ENV
+        run: echo "ABC={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)}}" >> $GITHUB_OUTPUT
       - name: Test
         run: echo $ABC
+  
+  execute-test-specification:
+    needs: read-all-feature-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.read-all-feature-files.outputs.matrix) }}
+    steps:
+      - run: echo $${{ matrix.files }}
