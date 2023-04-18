@@ -7,9 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: set JSON
-        run: echo "ABC={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)}}" >> $GITHUB_OUTPUT
+        run: echo "matrix={\"files\":{$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)}}" >> $GITHUB_OUTPUT
       - name: Test
-        run: echo $ABC
+        run: echo $matrix
   
   execute-test-specification:
     needs: read-all-feature-files
