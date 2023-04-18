@@ -1,0 +1,3 @@
+{ 'files' : { } }
+{ "files" : { } }
+{ "files" : { ./features/a.feature, ./features/b.feature,} }

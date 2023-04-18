@@ -8,4 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo "${{ env.files }}"
+      - name: set JSON
+        run: echo "ABC=123" >> $GITHUB_ENV
+      - name: Test
+        run: echo $ABC
