@@ -1,0 +1,39 @@
+name: Release Preparation 
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: "tui or prod"
+        required: true
+        default: "tui"
+      based_on_version:
+        description: "tag"
+        required: true
+        default: "default"
+      release_name:
+        description: "major, minor or patch"
+        required: false
+        default: "default"
+      
+jobs:
+  create_release_tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
+          body: |
+            This is the release tag description.
+          draft: false
+          prerelease: false
+
+      - name: Get Release Tag
+        run: echo "The release tag is ${{ steps.create_release.outputs.tag }}"
