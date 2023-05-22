@@ -23,7 +23,7 @@ jobs:
       - run: echo "This stage need be approved manually"
 
   execute-test-specification:
-    needs: manually-approved
+    needs: loadFeatures
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.loadFeatures.outputs.matrix) }}
