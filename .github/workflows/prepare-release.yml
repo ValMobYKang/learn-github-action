@@ -22,6 +22,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Create Incremented Version
+        id: create_incremented_version
+        shell: bash
+        run: |
+          set -eo pipefail
+
+          incremented_tag=$(python ./bin/increment_new_version.py
+                            --stage $${{ github.event.inputs.stage }}
+                            --based_on_version ${{ github.event.inputs.based_on_version}}
+                            --release_name ${{ github.event.inputs.release_name}})
+          
+          echo "$incremented_tag"
 
       - name: Create Release
         id: create_release
