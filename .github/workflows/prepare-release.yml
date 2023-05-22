@@ -30,7 +30,7 @@ jobs:
           set -eo pipefail
 
           incremented_tag=$(python ./bin/increment_new_version.py \
-                            --stage $${{ github.event.inputs.stage }} \
+                            --stage ${{ github.event.inputs.stage }} \
                             --based_on_version ${{ github.event.inputs.based_on_version}} \
                             --release_name ${{ github.event.inputs.release_name}})
           
