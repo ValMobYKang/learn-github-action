@@ -93,7 +93,6 @@ if __name__ == "__main__":
             if not tag_exists:
                 raise ValueError(f"tag v{based_on_version} does not exist.")
             print(f"{create_new_tag(based_on_version, based_on_version, release_type)}")
-
     else:
         if based_on_version == "default":
             raise ValueError(
