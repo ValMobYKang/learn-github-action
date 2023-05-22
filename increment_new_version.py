@@ -44,23 +44,22 @@ def get_suffix(input_version_string, is_latest_version):
 
 
 def create_new_tag(current_version, is_latest_tag, mode):
-    current_version = current_version.split(".")
+    major, minor, patch = current_version.split(".")
 
     if is_latest_tag == "default":
         if mode == "major":
-            current_version[0] = str(int(current_version[0]) + 1)
-            current_version[1] = '0'
-            current_version[2] = '0'
+            major = str(int(major) + 1)
+            minor, patch = '0', '0'
         elif mode == "minor":
-            current_version[1] = str(int(current_version[1]) + 1)
-            current_version[2] = '0'
+            minor = str(int(minor) + 1)
+            patch = '0'
         else:
-            current_version[2] = get_suffix(current_version[2], is_latest_tag)
-        new_version = ".".join(current_version)
+            patch = get_suffix(patch, is_latest_tag)
+        new_version = ".".join([major, minor, patch])
 
     else:
-        current_version[2] = get_suffix(current_version[2], is_latest_tag)
-        new_version = ".".join(current_version)
+        patch = get_suffix(patch, is_latest_tag)
+        new_version = ".".join([major, minor, patch])
         tag_already_exists = if_tag_exists(new_version)
         if tag_already_exists:
             raise ValueError(f"new tag {new_version} already exists")
@@ -70,7 +69,7 @@ def create_new_tag(current_version, is_latest_tag, mode):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Increment a new version for release.")
-    parser.add_argument("--stage", help="tui, appr or live", required=True)
+    parser.add_argument("--stage", help="dev, int or prod", required=True)
     parser.add_argument("--based_on_version", help="tag", required=True)
     parser.add_argument("--release_type", help="major, minor or patch", required=False)
     args = parser.parse_args()
@@ -79,7 +78,7 @@ if __name__ == "__main__":
     based_on_version = args.based_on_version
     release_type = args.release_type
 
-    if stage == "tui":
+    if stage == "dev":
         if based_on_version == "default":
             latest_tag = get_latest_tag()
             print(f"{create_new_tag(latest_tag, based_on_version, release_type)}")
@@ -97,7 +96,7 @@ if __name__ == "__main__":
     else:
         if based_on_version == "default":
             raise ValueError(
-                "To deploy to APPROVAL or LIVE stage, please specify a known version that was deployed to TUI before."
+                "To deploy to APPROVAL or prod stage, please specify a known version that was deployed to dev before."
             )
 
         tag_exists = if_tag_exists(based_on_version)

@@ -13,9 +13,17 @@ jobs:
         run: echo "matrix={\"features\":[$(for i in $(find ./features -type f -name "*.feature");do echo -n " \"$i\","; done;)]}" >> "$GITHUB_OUTPUT"
       - name: Test
         run: echo ${{ steps.set-matrix.outputs.matrix }}
-      
-  execute-test-specification:
+
+  manually-approved:
     needs: loadFeatures
+    runs-on: ubuntu-latest
+    environment:
+      name: int
+    steps:
+      - run: echo "This stage need be approved manually"
+
+  execute-test-specification:
+    needs: manually-approved
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.loadFeatures.outputs.matrix) }}
