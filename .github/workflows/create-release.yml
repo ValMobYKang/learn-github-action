@@ -7,10 +7,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: get repository changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: List PRs
+      id: pr-list
       run: |
-        abc=$(gh pr list)
-
-        echo "${abc}"
+        pr_list=$(gh pr list)
+        echo "::set-output name=pr_list::$pr_list"
+        
+    - name: Print PRs
+      run: |
+        echo ${{ steps.pr-list.outputs.pr_list }}
