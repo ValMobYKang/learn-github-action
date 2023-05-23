@@ -13,8 +13,7 @@ jobs:
       run: |
         set -eo pipefail
         
-        echo $GITHUB_REPOSITORY_OWNER
-        echo $GITHUB_REPOSITORY$
+        echo /repos/$GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY/pulls
 
         gh api \
           -H "Accept: application/vnd.github+json" \
