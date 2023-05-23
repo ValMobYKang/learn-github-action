@@ -15,17 +15,5 @@ jobs:
           last_release=$(gh release list --limit=1 | awk '{print $NF}')
           echo $last_release
           echo "------"
-          closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json "id, title, url")
+          closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json "id,title,url")
           echo $closed_prs
-
-    # - name: List Closed PRs Since Last Tag
-    #   id: closed-prs
-    #   run: |
-    #     last_tag=$(git describe --tags --abbrev=0)
-    #     closed_prs=$(gh pr list --state closed --base main --grep "" --json "base.ref=='main'&&updated_at>='${{ steps.last-tag-time.outputs.last_tag_time }}'&&head.sha^='${last_tag}^'")
-    #     echo "::set-output name=closed_prs::$closed_prs"
-
-    # - name: Print Closed PRs
-    #   run: |
-    #     echo "Closed PRs Since Last Tag:"
-    #     echo "${{ steps.closed-prs.outputs.closed_prs }}"
