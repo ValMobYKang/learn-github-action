@@ -9,11 +9,14 @@ jobs:
 
     - name: Get Last Tag Time
       id: last-tag-time
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git fetch --tags
         last_tag_time=$(git log -1 --format=%ci $(git describe --tags --abbrev=0))
         echo "::set-output name=last_tag_time::$last_tag_time"
 
+        gh release list
         echo $(git describe --tags --abbrev=0)
         echo $last_tag_time
 
