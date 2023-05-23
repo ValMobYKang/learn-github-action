@@ -15,6 +15,9 @@ jobs:
           last_release=$(gh release list --limit=1)
           echo $last_release
 
+          closed_prs=$(gh pr list --state closed --base main)
+          echo $closed_prs
+
     # - name: List Closed PRs Since Last Tag
     #   id: closed-prs
     #   run: |
