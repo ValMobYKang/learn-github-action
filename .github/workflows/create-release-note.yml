@@ -12,6 +12,11 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+          last_release=$(gh release list --limit=1)
+          last_release_date=$(echo $last_release | awk '{print $NF}')
+          echo $last_release
+          echo $last_release_date
+
           last_release=$(gh release list --limit=1 | awk '{print $NF}')
           closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json "number,title,url")
           echo $closed_prs
