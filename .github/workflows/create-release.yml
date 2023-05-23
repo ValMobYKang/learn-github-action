@@ -4,6 +4,9 @@ jobs:
   retrieve-changes:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: get repository changes
       shell: bash
       run: |
