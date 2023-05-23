@@ -18,3 +18,16 @@ jobs:
     - name: Print PRs
       run: |
         echo ${{ steps.pr-list.outputs.pr_list }}
+    
+    - name: Get Last Tag
+      id: last-tag
+      run: |
+        last_tag=$(git describe --tags --abbrev=0)
+        last_commit=$(git rev-list -n 1 $last_tag)
+        echo "::set-output name=last_tag::$last_tag"
+        echo "::set-output name=last_commit::$last_commit"
+        
+    - name: Print Last Tag
+      run: |
+        echo "Last tag: ${{ steps.last-tag.outputs.last_tag }}"
+        echo "Last commit: ${{ steps.last-tag.outputs.last_commit }}"
