@@ -14,7 +14,8 @@ jobs:
       run: |
           last_release=$(gh release list --limit=1)
           echo $last_release
-
+          echo $(gh release list --limit=1 | cut -f 1)
+          echo "------"
           closed_prs=$(gh pr list --state closed --base main)
           echo $closed_prs
 
