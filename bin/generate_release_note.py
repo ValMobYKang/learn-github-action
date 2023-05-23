@@ -3,7 +3,7 @@ import logging
 import json
 
 
-def create_release_notes(project:str, repo:str, current: str,changes):
+def create_release_notes(project:str, repo:str, current_tag:str, previous_tag:str, previous_date:str, changes):
     header_section = ""
     changes_section = ""
     sonarqube_section = ""
@@ -28,4 +28,9 @@ if __name__ == "__main__":
     for arg in vars(args):
         print(arg, getattr(args,arg)) 
     
-    document = create_release_notes(project=args.project, repo=args.repo, changes=json.loads(args.changes), current=args.current)
+    document = create_release_notes(project=args.project, 
+                                    repo=args.repo, 
+                                    current_tag=args.current_tag,
+                                    previous_tag=args.previous_tag,
+                                    previous_date=args.previous_date,
+                                    changes=json.loads(args.changes))
