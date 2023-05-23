@@ -12,7 +12,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          last_release_time=$(gh release list --limit=1 --format="%(taggable_time)" | awk -F "[-T:]" '{print $1"-"$2"-"$3"T"$4":"$5":"$6"Z"}')
+          last_release_time=$(gh release list --limit=1" | awk -F "[-T:]" '{print $1"-"$2"-"$3"T"$4":"$5":"$6"Z"}')
           echo "::set-output name=last_release_time::$last_release_time"
 
           echo last_release_time 
