@@ -15,7 +15,7 @@ jobs:
           last_release=$(gh release list --limit=1 | awk '{print $NF}')
           echo $last_release
           echo "------"
-          closed_prs=$(gh pr list --base main --search "closed:>$last_release" )
+          closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json )
           echo $closed_prs
 
     # - name: List Closed PRs Since Last Tag
