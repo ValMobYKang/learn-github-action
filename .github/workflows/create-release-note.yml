@@ -14,9 +14,11 @@ jobs:
       run: |
           last_release=$(gh release list --limit=1)
           last_release_date=$(echo $last_release | awk '{print $NF}')
+          last_release_tag=$(echo $last_release | awk '{ print $2 }')
           echo $last_release
           echo $last_release_date
-
+          echo $last_release_tag
+          
           last_release=$(gh release list --limit=1 | awk '{print $NF}')
-          closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json "number,title,url")
+          closed_prs=$(gh pr list --base main --search "closed:>$last_release_date" --json "number,title,url")
           echo $closed_prs
