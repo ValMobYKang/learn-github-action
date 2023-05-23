@@ -12,11 +12,8 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          last_release_time=$(gh release list --limit=1 | awk -F '{print $NF}')
-          echo "::set-output name=last_release_time::$last_release_time"
-
-          echo last_release_time 
-
+          last_release=$(gh release list --limit=1)
+          echo $last_release
 
     # - name: List Closed PRs Since Last Tag
     #   id: closed-prs
