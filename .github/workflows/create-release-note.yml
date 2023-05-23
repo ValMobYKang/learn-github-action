@@ -20,4 +20,10 @@ jobs:
           closed_prs=$(gh pr list --base main --search "closed:>$last_release_date" --json "number,title,url")
           echo $closed_prs
 
-          python ./bin/generate_release_note.py
+          python ./bin/generate_release_note.py \
+            --project "project_name" \
+            --repo "repository_link" \
+            --current_tag "current_new_tag" \
+            --previous_tag "last_tag" \
+            --previous_date "date" \
+            --changes $closed_prs 

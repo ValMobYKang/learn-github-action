@@ -24,4 +24,8 @@ if __name__ == "__main__":
     parser.add_argument("--changes", help="String of Changes from the last release", required=True)
     args = parser.parse_args()
 
+    # DEBUG
+    for arg in vars(args):
+        print(arg, getattr(args,arg)) 
+    
     document = create_release_notes(project=args.project, repo=args.repo, changes=json.loads(args.changes), current=args.current)
