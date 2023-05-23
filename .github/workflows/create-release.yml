@@ -1,0 +1,14 @@
+name: actions/create-release
+on: [push]
+jobs:
+  retrieve-changes:
+    runs-on: ubuntu-latest
+    steps:
+    - name: get repository changes
+      shell: bash
+      run: |
+        set -eo pipefail
+        python ./bin/retrieve_changes.py \
+          --repo "repo_name" \
+          --version "version" \
+          --token ${{secrets.GITHUB_TOKEN}}
