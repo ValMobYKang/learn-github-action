@@ -11,6 +11,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        set -eo pipefail
+        
+        echo $GITHUB_REPOSITORY_OWNER
+        echo $GITHUB_REPOSITORY$
+
         gh api \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
