@@ -9,6 +9,8 @@ jobs:
 
     - name: List PRs
       id: pr-list
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pr_list=$(gh pr list)
         echo "::set-output name=pr_list::$pr_list"
