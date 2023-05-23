@@ -7,27 +7,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Get Last Tag Time
-      id: last-tag-time
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get Last Release Time
+      id: last-release-time
       run: |
-        git fetch --tags
-        last_tag_time=$(git log -1 --format=%ci $(git describe --tags --abbrev=0))
-        echo "::set-output name=last_tag_time::$last_tag_time"
+        last_release_time=$(gh release list --limit=1 --format="%(taggable_time)" | awk -F "[-T:]" '{print $1"-"$2"-"$3"T"$4":"$5":"$6"Z"}')
+        echo "::set-output name=last_release_time::$last_release_time"
 
-        gh release list
-        echo $(git describe --tags --abbrev=0)
-        echo $last_tag_time
+    - name: List Closed PRs Since Last Release
+      id: closed-prs
+      run: |
+        closed_prs=$(gh pr list --state closed --base main --grep "" --json "base.ref=='main'&&updated_at>='${{ steps.last-release-time.outputs.last_release_time }}'&&base.sha!=$(git rev-parse $(gh release list --limit=1 --format='%(target_commitish)'))")
+        echo "::set-output name=closed_prs::$closed_prs"
 
-    # - name: List Closed PRs Since Last Tag
-    #   id: closed-prs
-    #   run: |
-    #     last_tag=$(git describe --tags --abbrev=0)
-    #     closed_prs=$(gh pr list --state closed --base main --grep "" --json "base.ref=='main'&&updated_at>='${{ steps.last-tag-time.outputs.last_tag_time }}'&&head.sha^='${last_tag}^'")
-    #     echo "::set-output name=closed_prs::$closed_prs"
-
-    # - name: Print Closed PRs
-    #   run: |
-    #     echo "Closed PRs Since Last Tag:"
-    #     echo "${{ steps.closed-prs.outputs.closed_prs }}"
+    - name: Print Closed PRs
+      run: |
+        echo "Closed PRs Since Last Release:"
+        echo "${{ steps.closed-prs.outputs.closed_prs }}"
