@@ -7,13 +7,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Get Last Tag Time
-      id: last-tag-time
+    - name: Get Closed PRs
+      id: closed-prs
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
           last_release=$(gh release list --limit=1 | awk '{print $NF}')
-          echo $last_release
-          echo "------"
-          closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json "id,title,url")
+          closed_prs=$(gh pr list --base main --search "closed:>$last_release" --json "number,title,url")
           echo $closed_prs
