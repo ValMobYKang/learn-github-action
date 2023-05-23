@@ -12,7 +12,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        pr_list=$(gh pr list)
+        pr_list=$(gh pr list --state=merged)
         echo "::set-output name=pr_list::$pr_list"
         
     - name: Print PRs
