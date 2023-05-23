@@ -14,6 +14,8 @@ jobs:
         last_tag_time=$(git log -1 --format=%ci $(git describe --tags --abbrev=0))
         echo "::set-output name=last_tag_time::$last_tag_time"
 
+        echo $last_tag_time
+
     - name: List Closed PRs Since Last Tag
       id: closed-prs
       run: |
