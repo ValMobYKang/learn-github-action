@@ -17,7 +17,6 @@ jobs:
           last_release_date=$(echo $last_release | awk '{print $NF}')
           last_release_tag=$(echo $last_release | awk '{ print $2 }')
           
-          last_release=$(gh release list --limit=1 | awk '{print $NF}')
           closed_prs=$(gh pr list --base main --search "merged:>$last_release_date" --json "number,title,url")
           echo $closed_prs
 
@@ -27,4 +26,4 @@ jobs:
             --current_tag "current_new_tag" \
             --previous_tag "last_tag" \
             --previous_date "date" \
-            --changes "${closed_prs}" 
+            --changes "${closed_prs}"
