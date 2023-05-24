@@ -15,7 +15,7 @@ jobs:
           echo "------------"
           echo $(git rev-list --tags --max-count=1)
           echo "************"
-          echo $(gh release list --limit=1)
+          echo $(gh release list)
           echo "------------"
           last_release=$(gh release list --limit=1)
           last_release_date=$(echo $last_release | awk '{print $NF}')
