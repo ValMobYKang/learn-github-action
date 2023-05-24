@@ -80,8 +80,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser("Create Release Notes from aggregated data")
 
-    parser.add_argument("--project", help="project name", required="True")
-    parser.add_argument("--repo", help="Repository name in Github", required="True")
+    parser.add_argument("--project", help="project name", required=True)
+    parser.add_argument("--repo", help="Repository name in Github", required=True)
     parser.add_argument("--current_tag", help="Current tag", required=True)
     parser.add_argument("--previous_tag", help="Previous tag", required=True)
     parser.add_argument("--previous_date", help="Previous date", required=True) 
