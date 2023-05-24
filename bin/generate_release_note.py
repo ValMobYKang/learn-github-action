@@ -34,7 +34,7 @@ def create_changes_section(changes):
             "| ------ |------------- |",
     ])
     section.extend([
-        f"| {pr['number']} | [{pr['title']}]({pr['url']}) | |" for pr in changes[::-1]
+        f"| {pr['number']} | [{pr['title']}]({pr['url']}) |" for pr in changes[::-1]
     ])
     return section
 
@@ -66,11 +66,14 @@ def create_sonarqube_section():
 
 
 def create_release_notes(project:str, repo:str, current_tag:str, previous_tag:str, previous_date:str, changes):
+    content = ""
     header_section = create_header_section(project, repo, current_tag, previous_tag, previous_date)
     changes_section = create_changes_section(changes)
     sonarqube_section = create_sonarqube_section()
     black_duck_section = create_blackDuck_section()
-    return (header_section+ changes_section+ sonarqube_section + black_duck_section)
+    for line in (header_section+ changes_section+ sonarqube_section + black_duck_section):
+        content += line + '\n'
+    return content
 
 
 if __name__ == "__main__":
@@ -87,10 +90,6 @@ if __name__ == "__main__":
     parser.add_argument("--previous_date", help="Previous date", required=True) 
     parser.add_argument("--changes", help="String of Changes from the last release", required=True)
     args = parser.parse_args()
-
-    # DEBUG
-    for arg in vars(args):
-        print(arg,": ",getattr(args,arg)) 
     
     document = create_release_notes(project=args.project, 
                                     repo=args.repo, 
@@ -99,5 +98,6 @@ if __name__ == "__main__":
                                     previous_date=args.previous_date,
                                     changes=json.loads(test_changes))
 
-    with open(f"./docs/release_note/{args.current_tag}.md", "w", encoding="utf-8") as out:
-        out.writelines(line + "\n" for line in document)
+    print(document)
+    # with open(f"./docs/release_note/{args.current_tag}.md", "w", encoding="utf-8") as out:
+    #     out.writelines()
