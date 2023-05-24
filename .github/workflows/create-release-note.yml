@@ -12,6 +12,9 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+          echo "------------"
+          echo $(git rev-list --tags --max-count=1)
+          echo "------------"
           last_release=$(gh release list --limit=1)
           last_release_date=$(echo $last_release | awk '{print $NF}')
           last_release_tag=$(echo $last_release | awk '{ print $2 }')

@@ -12,7 +12,7 @@ def create_release_notes(project:str, repo:str, current_tag:str, previous_tag:st
 
 
 if __name__ == "__main__":
-    abc = '[{"number":3,"title":"add b","url":"https://github.com/ValMobYKang/learn-github-action/pull/3"},{"number":2,"title":"add a","url":"https://github.com/ValMobYKang/learn-github-action/pull/2"}]'
+
     logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser("Create Release Notes from aggregated data")
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     # DEBUG
     for arg in vars(args):
-        print(arg, getattr(args,arg)) 
+        print(arg,": ",getattr(args,arg)) 
     
     document = create_release_notes(project=args.project, 
                                     repo=args.repo, 
