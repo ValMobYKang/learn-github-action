@@ -21,8 +21,8 @@ jobs:
           echo $closed_prs
 
           python ./bin/generate_release_note.py \
-            --project "project_name" \
-            --repo "repository_link" \
+            --project "Data Order Management(ODM)" \
+            --repo "data-order-management-api" \
             --current_tag "current_new_tag" \
             --previous_tag "last_tag" \
             --previous_date "date" \
