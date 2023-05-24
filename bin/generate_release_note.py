@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 def create_header_section(project, repo, current_tag, previous_tag, previous_date):
-    now = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+    now = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     author = "ODM-Team"
     link = f"https://github.com/vwdfive/{repo}/releases/tag/{current_tag}"
     return [
