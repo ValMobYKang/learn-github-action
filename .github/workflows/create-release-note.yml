@@ -12,17 +12,13 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          echo "------------"
-          echo $(git rev-list --tags --max-count=1)
-          echo "************"
-          echo $(gh release list)
-          echo "------------"
+
           last_release=$(gh release list --limit=1)
           last_release_date=$(echo $last_release | awk '{print $NF}')
           last_release_tag=$(echo $last_release | awk '{ print $2 }')
           
           last_release=$(gh release list --limit=1 | awk '{print $NF}')
-          closed_prs=$(gh pr list --base main --search "closed:>$last_release_date" --json "number,title,url")
+          closed_prs=$(gh pr list --base main --search "merged:>$last_release_date" --json "number,title,url")
           echo $closed_prs
 
           python ./bin/generate_release_note.py \
