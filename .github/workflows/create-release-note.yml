@@ -27,4 +27,4 @@ jobs:
             --previous_tag "last_tag" \
             --previous_date "date" \
             --changes "${closed_prs}" \
-            > ./docs/release_note/${current_tag}.md
+            > docs/release_note/"${current_tag}.md"
