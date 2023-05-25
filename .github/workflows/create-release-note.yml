@@ -40,5 +40,5 @@ jobs:
         echo "${{ steps.closed-prs.outputs.TAG }}"
 
         git add -A
-        git commit -m "Release"
+        git commit -m "Release ${{ steps.closed-prs.outputs.TAG }}"
         git push
