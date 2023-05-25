@@ -12,6 +12,10 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+
+          git config --global user.name "ODM Team"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           last_release=$(gh release list --limit=1)
           last_release_date=$(echo $last_release | awk '{print $NF}')
           last_release_tag=$(echo $last_release | awk '{ print $2 }')
@@ -31,12 +35,9 @@ jobs:
 
     - name: update file and push to remote
       run: |
-        echo "Test push commit to the remote in the workflow" >> test.txt
-        git config --global user.name "ODM Team"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
         echo "${{ steps.set_version.outputs.TAG }}"
 
         git add -A
-        git commit -m "Update Release"
+        git commit -m "Release"
         git push
