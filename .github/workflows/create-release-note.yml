@@ -12,7 +12,6 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-
           last_release=$(gh release list --limit=1)
           last_release_date=$(echo $last_release | awk '{print $NF}')
           last_release_tag=$(echo $last_release | awk '{ print $2 }')
@@ -26,4 +25,18 @@ jobs:
             --current_tag "current_new_tag" \
             --previous_tag ${last_release_tag} \
             --previous_date ${last_release_date} \
-            --changes "${closed_prs}"
+            --changes "${closed_prs}" > ./docs/release_note/{last_release_tag}.md
+          
+          echo "::set-output name=TAG::${last_release_tag}"
+
+    - name: update file and push to remote
+      run: |
+        echo "Test push commit to the remote in the workflow" >> test.txt
+        git config --global user.name "ODM Team"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        echo "${{ steps.set_version.outputs.TAG }}"
+
+        git add -A
+        git commit -m "Update Release"
+        git push
