@@ -22,6 +22,10 @@ jobs:
           
           closed_prs=$(gh pr list --base main --search "merged:>$last_release_date" --json "number,title,url")
           echo $closed_prs
+          echo "--------"
+          echo "release_version=v0.0.1" >> "$GITHUB_ENV"
+          echo "${{ env.release_version }}"
+          echo "--------"
 
           python ./bin/generate_release_note.py \
             --project "Data Order Management(ODM)" \
@@ -35,10 +39,12 @@ jobs:
           echo "TAG=${last_release_tag}" >> $GITHUB_OUTPUT
 
     - name: update file and push to remote
+      environment:
+        name: int
       run: |
 
         echo "${{ steps.closed-prs.outputs.TAG }}"
 
         git add -A
-        git commit -m "Release ${{ steps.closed-prs.outputs.TAG }}"
+        git commit -m "Release ${{ steps.closed-prs.outputs.TAG}}"
         git push
