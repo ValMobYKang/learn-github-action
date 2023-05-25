@@ -32,11 +32,12 @@ jobs:
             --changes "${closed_prs}" > ./docs/release_note/${last_release_tag}.md
           
           echo "::set-output name=TAG::${last_release_tag}"
+          echo "TAG=${last_release_tag}" >> $GITHUB_OUTPUT
 
     - name: update file and push to remote
       run: |
 
-        echo "${{ steps.set_version.outputs.TAG }}"
+        echo "${{ steps.closed-prs.outputs.TAG }}"
 
         git add -A
         git commit -m "Release"
